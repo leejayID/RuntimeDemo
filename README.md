@@ -586,6 +586,7 @@ NSObject+Archive.m文件：
 
 ### 六、字典转模型
 利用Runtime，遍历模型中所有成员变量，根据模型的属性名，去字典中查找key，取出对应的value，给模型的属性赋值，实现的思路主要借鉴MJExtension。
+
 NSObject+Property.h文件：
 ```objc
 #import <Foundation/Foundation.h>
@@ -700,12 +701,18 @@ NSObject+Property.m文件：
 ```
 ## 参考
 [Associated Objects](http://nshipster.com/associated-objects/)
+
 [Objective-C Runtime](http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/)
+
 [Objective-C Runtime 1小时入门教程](https://www.ianisme.com/ios/2019.html)
+
 [Objective-C的hook方案（一）: Method Swizzling](http://blog.csdn.net/yiyaaixuexi/article/details/9374411)
+
 iOS开发进阶
+
 Effective Objective-C 2.0
 
 ## 最后
 由于笔者水平有限，文中如果有错误的地方，还望大神指正。
+
 附上本文的demo下载链接，【GitHub】、[【OSChina】](https://git.oschina.net/Lee_Jay/RuntimeDemo)，如果你觉得看完后对你有所帮助，还望点个star。赠人玫瑰，手有余香。
