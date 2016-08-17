@@ -214,15 +214,15 @@ objc_msgSend发送消息的原理：
 
 ### 四、关联对象 （AssociatedObject）
 有时我们需要在对象中存放相关信息，Objective-C中有一种强大的特性可以解决此类问题，就是“关联对象”。 
-可以给某个对象关联许多其他对象，这些对象通过“键”来区分。存储对象值时，可以指明“存储策略”，用以维护相应地“内存管理语义”。存储策略由名为“objc_AssociationPolicy” 的枚举所定义。下表中列出了该枚举值得取值，同时还列出了与之等下的@ property属性：假如关联对象成为了属性，那么他就会具备对应的语义。
+可以给某个对象关联许多其他对象，这些对象通过“键”来区分。存储对象值时，可以指明“存储策略”，用以维护相应地“内存管理语义”。存储策略由名为“objc_AssociationPolicy” 的枚举所定义。下表中列出了该枚举值得取值，同时还列出了与之等下的@property属性：假如关联对象成为了属性，那么他就会具备对应的语义。
 
-| 关联类型                           | 等效的@ property属性                                   |
+| 关联类型                           | 等效的@property属性                                   |
 |:---------------------------------:|:----------------------------------------------------:| 
-| OBJC_ASSOCIATION_ASSIGN           | @ property (assign) or @ property (unsafe_unretained)| 
-| OBJC_ASSOCIATION_RETAIN_NONATOMIC | @ property (nonatomic, strong)                       | 
-| OBJC_ASSOCIATION_COPY_NONATOMIC   | @ property (nonatomic, copy)                         |  
-| OBJC_ASSOCIATION_RETAIN           | @ property (atomic, strong)                          |
-| OBJC_ASSOCIATION_COPY             | @ property (atomic, copy)                            |
+| OBJC_ASSOCIATION_ASSIGN           | @property (assign) or @ property (unsafe_unretained)| 
+| OBJC_ASSOCIATION_RETAIN_NONATOMIC | @property (nonatomic, strong)                       | 
+| OBJC_ASSOCIATION_COPY_NONATOMIC   | @property (nonatomic, copy)                         |  
+| OBJC_ASSOCIATION_RETAIN           | @property (atomic, strong)                          |
+| OBJC_ASSOCIATION_COPY             | @property (atomic, copy)                            |
 
 下列方法可以管理关联对象：
 ```objc
@@ -237,8 +237,11 @@ void objc_removeAssociatedObjects(id object)
 在Objective-C中，对象收到消息之后，究竟会调用哪种方法需要在运行期才能解析出来。查找消息的唯一依据是选择子(selector)，选择子(selector)与相应的方法(IMP)对应，利用Objective-C的动态特性，可以实现在运行时偷换选择子（selector）对应的方法实现，这就是方法交换（method swizzling）。
 每个类都有一个方法列表，存放着selector的名字和方法实现的映射关系。IMP有点类似函数指针，指向具体的Method实现。
 ![](http://a2.qpic.cn/psb?/V13Of23z0hLctI/YUZqru1ADhaH2ek*T1bOrh5D1GWWsKAascGdVQkM0D4!/b/dI0BAAAAAAAA&bo=vwHCAL8BwgADByI!&rf=viewer_4)
+
 类的方法列表会把每个选择子都映射到相关的IMP之上。
+
 ![](http://a2.qpic.cn/psb?/V13Of23z0hLctI/owyEBHsSrfZ8zhG5UmrXNSnwZgozd*c5m.zwYz2CA84!/b/dOUAAAAAAAAA&bo=vgFMAb4BTAEDByI!&rf=viewer_4)
+
 我们可以新增选择子，也可以改变某个选择子所对应的方法实现，还可以交换两个选择子所映射到的指针。
 #### Objective-C中提供了三种API来动态替换类方法或实例方法的实现：
 * 1.```class_replaceMethod```替换类方法的定义。
@@ -715,4 +718,4 @@ Effective Objective-C 2.0
 ## 最后
 由于笔者水平有限，文中如果有错误的地方，还望大神指正。
 
-附上本文的demo下载链接，【GitHub】、[【OSChina】](https://git.oschina.net/Lee_Jay/RuntimeDemo)，如果你觉得看完后对你有所帮助，还望点个star。赠人玫瑰，手有余香。
+附上本文的demo下载链接，【GitHub】(https://github.com/leejayID/RuntimeDemo)、[【OSChina】](https://git.oschina.net/Lee_Jay/RuntimeDemo)，如果你觉得看完后对你有所帮助，还望点个star。赠人玫瑰，手有余香。
