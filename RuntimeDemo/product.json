@@ -1,0 +1,52 @@
+{
+    "product":
+            {
+              "name": "手机",
+              "productList": [
+                               {
+                               "name": "iPhone",
+                               "id": "1",
+                               "price": 100.5,
+                               "image": {
+                                           "width": 120,
+                                           "height": 150,
+                                           "imageUrl":"www.iPhone.com",
+                                           "id":"100"
+                                        }
+                               },
+                               {
+                               "name": "三星",
+                               "id": "2",
+                               "price": 80.5,
+                               "image": {
+                                           "width": 100,
+                                           "height": 200,
+                                           "imageUrl":"www.samsung.com",
+                                           "id":"101"
+                                        }
+                               },
+                               {
+                               "name": "小米",
+                               "id": "3",
+                               "price": 60.5,
+                               "image": {
+                                           "width": 200,
+                                           "height": 100,
+                                           "imageUrl":"www.xiaomi.com",
+                                           "id":"102",
+                                        }
+                               },
+                               {
+                               "name": "华为",
+                               "id": "4",
+                               "price": 40.5,
+                               "image": {
+                                           "width": 150,
+                                           "height": 150,
+                                           "imageUrl":"www.huawei.com",
+                                           "id":"103"
+                                        }
+                               }
+                               ]
+            }
+}
