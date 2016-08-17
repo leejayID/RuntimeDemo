@@ -139,6 +139,7 @@ id objc_msgSend (id self, SEL _cmd, ...);
 id returnValue objc_mgSend(someObject, @selector(message:), parm);
 ```
 传递消息的几种函数：
+
 ``` objc_msgSend ```：普通的消息都会通过该函数发送。
 ``` objc_msgSend_stret ```：消息中有结构体作为返回值时，通过此函数发送和接收返回值。
 ``` objc_msgSend_fpret ```：消息中返回的是浮点数，可交由此函数处理。
@@ -146,6 +147,7 @@ id returnValue objc_mgSend(someObject, @selector(message:), parm);
 ``` objc_msgSendSuper_stret ```：和``` objc_msgSend_stret ```类似，这里把消息发送给超类。
 ``` objc_msgSendSuper_fpret ```：和``` objc_msgSend_fpret ```类似，这里把消息发送给超类。
 编译器会根据情况选择一个函数来执行。
+
 ``` objc_msgSend ```发送消息的原理：
 * 第一步：检测这个selector是不是要被忽略的。
 * 第二步：检测这个target对象是不是nil对象。（nil对象执行任何一个方法都不会Crash，因为会被忽略掉）
@@ -236,7 +238,9 @@ void objc_removeAssociatedObjects(id object)
 ### 五、方法交换（method swizzing）
 在Objective-C中，对象收到消息之后，究竟会调用哪种方法需要在运行期才能解析出来。查找消息的唯一依据是选择子(selector)，选择子(selector)与相应的方法(IMP)对应，利用Objective-C的动态特性，可以实现在运行时偷换选择子（selector）对应的方法实现，这就是方法交换（method swizzling）。
 
-![类的方法列表会把每个选择子都映射到相关的IMP之上](http://upload-images.jianshu.io/upload_images/1321491-fab02075750e2129.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://upload-images.jianshu.io/upload_images/1321491-fab02075750e2129.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+类的方法列表会把每个选择子都映射到相关的IMP之上
 
 ![](http://upload-images.jianshu.io/upload_images/1321491-34dff4504826ae5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
