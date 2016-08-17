@@ -1,6 +1,6 @@
 ## 前言
 Runtime是一套比较底层的纯C语言API，包含了很多底层的C语言API。在我们平时编写的OC代码中，程序运行时，其实最终都是转成了Runtime的C语言代码。Runtime是开源的，你可以去[这里](http://opensource.apple.com//source/objc4/)查看Runtime的源码。
-本文主要分为两个章节，第一部分主要是理论和原理，第二部分主要是使用实例。文章的最后会附上本文的demo下载链接。
+本文主要分为两个章节，第一部分主要是理论和原理，第二部分主要是使用实例。简书文章[地址](http://www.jianshu.com/p/3e050ec3b759)，文章的最后会附上本文的demo下载链接。
 ## 理论知识
 ### 一、Objective-C中的数据结构
 描述Objective-C对象所用的数据结构定义都在Runtime的头文件里，下面我们逐一分析。
@@ -44,7 +44,7 @@ struct objc_class {
 * 5.cache：
 方法缓存列表，objc_msgSend（下文详解）每调用一次方法后，就会把该方法缓存到cache列表中，下次调用的时候，会优先从cache列表中寻找，如果cache没有，才从methodLists中查找方法。提高效率。
 
-![](http://a1.qpic.cn/psb?/V13Of23z0hLctI/sXpg5iewfdOBax2clulklK98rRcsgE4GHW8l.YBa1uQ!/b/dHEBAAAAAAAA&bo=JAI9AiQCPQIDByI!&rf=viewer_4)
+![](http://upload-images.jianshu.io/upload_images/1321491-dda0360cd4769dbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ##### 看图说话：
 上图中：superclass指针代表继承关系，isa指针代表实例所属的类。
 类也是一个对象，它是另外一个类的实例，这个就是“元类”，元类里面保存了类方法的列表，类里面保存了实例方法的列表。实例对象的isa指向类，类对象的isa指向元类，元类对象的isa指针指向一个“根元类”（root metaclass）。所有子类的元类都继承父类的元类，换而言之，类对象和元类对象有着同样的继承关系。
@@ -139,14 +139,14 @@ id objc_msgSend (id self, SEL _cmd, ...);
 id returnValue objc_mgSend(someObject, @selector(message:), parm);
 ```
 传递消息的几种函数：
-objc_msgSend：普通的消息都会通过该函数发送。
-objc_msgSend_stret：消息中有结构体作为返回值时，通过此函数发送和接收返回值。
-objc_msgSend_fpret：消息中返回的是浮点数，可交由此函数处理。
-objc_msgSendSuper：和objc_msgSend类似，这里把消息发送给超类。
-objc_msgSendSuper_stret：和objc_msgSend_stret类似，这里把消息发送给超类。
-objc_msgSendSuper_fpret：和objc_msgSend_fpret类似，这里把消息发送给超类。
+``` objc_msgSend ```：普通的消息都会通过该函数发送。
+``` objc_msgSend_stret ```：消息中有结构体作为返回值时，通过此函数发送和接收返回值。
+``` objc_msgSend_fpret ```：消息中返回的是浮点数，可交由此函数处理。
+``` objc_msgSendSuper ```：和``` objc_msgSend ```类似，这里把消息发送给超类。
+``` objc_msgSendSuper_stret ```：和``` objc_msgSend_stret ```类似，这里把消息发送给超类。
+``` objc_msgSendSuper_fpret ```：和``` objc_msgSend_fpret ```类似，这里把消息发送给超类。
 编译器会根据情况选择一个函数来执行。
-objc_msgSend发送消息的原理：
+``` objc_msgSend ```发送消息的原理：
 * 第一步：检测这个selector是不是要被忽略的。
 * 第二步：检测这个target对象是不是nil对象。（nil对象执行任何一个方法都不会Crash，因为会被忽略掉）
 * 第三步：首先会根据target对象的isa指针获取它所对应的类（class）。
@@ -235,12 +235,10 @@ void objc_removeAssociatedObjects(id object)
 ```
 ### 五、方法交换（method swizzing）
 在Objective-C中，对象收到消息之后，究竟会调用哪种方法需要在运行期才能解析出来。查找消息的唯一依据是选择子(selector)，选择子(selector)与相应的方法(IMP)对应，利用Objective-C的动态特性，可以实现在运行时偷换选择子（selector）对应的方法实现，这就是方法交换（method swizzling）。
-每个类都有一个方法列表，存放着selector的名字和方法实现的映射关系。IMP有点类似函数指针，指向具体的Method实现。
-![](http://a2.qpic.cn/psb?/V13Of23z0hLctI/YUZqru1ADhaH2ek*T1bOrh5D1GWWsKAascGdVQkM0D4!/b/dI0BAAAAAAAA&bo=vwHCAL8BwgADByI!&rf=viewer_4)
 
-类的方法列表会把每个选择子都映射到相关的IMP之上。
+![类的方法列表会把每个选择子都映射到相关的IMP之上](http://upload-images.jianshu.io/upload_images/1321491-fab02075750e2129.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-![](http://a2.qpic.cn/psb?/V13Of23z0hLctI/owyEBHsSrfZ8zhG5UmrXNSnwZgozd*c5m.zwYz2CA84!/b/dOUAAAAAAAAA&bo=vgFMAb4BTAEDByI!&rf=viewer_4)
+![](http://upload-images.jianshu.io/upload_images/1321491-34dff4504826ae5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 我们可以新增选择子，也可以改变某个选择子所对应的方法实现，还可以交换两个选择子所映射到的指针。
 #### Objective-C中提供了三种API来动态替换类方法或实例方法的实现：
