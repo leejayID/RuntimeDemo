@@ -718,4 +718,4 @@ Effective Objective-C 2.0
 ## 最后
 由于笔者水平有限，文中如果有错误的地方，还望大神指正。
 
-附上本文的demo下载链接，【GitHub】(https://github.com/leejayID/RuntimeDemo)、[【OSChina】](https://git.oschina.net/Lee_Jay/RuntimeDemo)，如果你觉得看完后对你有所帮助，还望点个star。赠人玫瑰，手有余香。
+附上本文的demo下载链接，[【GitHub】](https://github.com/leejayID/RuntimeDemo)、[【OSChina】](https://git.oschina.net/Lee_Jay/RuntimeDemo)，如果你觉得看完后对你有所帮助，还望点个star。赠人玫瑰，手有余香。
