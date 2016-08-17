@@ -141,11 +141,17 @@ id returnValue objc_mgSend(someObject, @selector(message:), parm);
 传递消息的几种函数：
 
 ``` objc_msgSend ```：普通的消息都会通过该函数发送。
+
 ``` objc_msgSend_stret ```：消息中有结构体作为返回值时，通过此函数发送和接收返回值。
+
 ``` objc_msgSend_fpret ```：消息中返回的是浮点数，可交由此函数处理。
+
 ``` objc_msgSendSuper ```：和``` objc_msgSend ```类似，这里把消息发送给超类。
+
 ``` objc_msgSendSuper_stret ```：和``` objc_msgSend_stret ```类似，这里把消息发送给超类。
+
 ``` objc_msgSendSuper_fpret ```：和``` objc_msgSend_fpret ```类似，这里把消息发送给超类。
+
 编译器会根据情况选择一个函数来执行。
 
 ``` objc_msgSend ```发送消息的原理：
