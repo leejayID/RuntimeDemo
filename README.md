@@ -1,6 +1,6 @@
 ## 前言
 Runtime是一套比较底层的纯C语言API，包含了很多底层的C语言API。在我们平时编写的OC代码中，程序运行时，其实最终都是转成了Runtime的C语言代码。Runtime是开源的，你可以去[这里](http://opensource.apple.com//source/objc4/)下载Runtime的源码。
-本文主要分为两个章节，第一部分主要是理论和原理，第二部分主要是使用实例。简书文章[地址](http://www.jianshu.com/p/3e050ec3b759)，文章的最后会附上本文的demo下载链接。
+本文主要分为两个章节，第一部分主要是理论和原理，第二部分主要是使用实例。简书文章[地址](http://www.jianshu.com/p/3e050ec3b759)，CSDN文章[地址](http://blog.csdn.net/leejay_carson/article/details/52239246)。文章的最后会附上本文的demo下载链接。
 ## 理论知识
 ### 一、Objective-C中的数据结构
 描述Objective-C对象所用的数据结构定义都在Runtime的头文件里，下面我们逐一分析。
