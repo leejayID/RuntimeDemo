@@ -44,7 +44,7 @@ struct objc_class {
 * 5.cache：
 方法缓存列表，objc_msgSend（下文详解）每调用一次方法后，就会把该方法缓存到cache列表中，下次调用的时候，会优先从cache列表中寻找，如果cache没有，才从methodLists中查找方法。提高效率。
 
-![](http://img.blog.csdn.net/20160818110806256)
+![](http://upload-images.jianshu.io/upload_images/1321491-dda0360cd4769dbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ##### 看图说话：
 上图中：superclass指针代表继承关系，isa指针代表实例所属的类。
 类也是一个对象，它是另外一个类的实例，这个就是“元类”，元类里面保存了类方法的列表，类里面保存了实例方法的列表。实例对象的isa指向类，类对象的isa指向元类，元类对象的isa指针指向一个“根元类”（root metaclass）。所有子类的元类都继承父类的元类，换而言之，类对象和元类对象有着同样的继承关系。
