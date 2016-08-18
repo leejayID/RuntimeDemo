@@ -1,5 +1,5 @@
 ## 前言
-Runtime是一套比较底层的纯C语言API，包含了很多底层的C语言API。在我们平时编写的OC代码中，程序运行时，其实最终都是转成了Runtime的C语言代码。Runtime是开源的，你可以去[这里](http://opensource.apple.com//source/objc4/)查看Runtime的源码。
+Runtime是一套比较底层的纯C语言API，包含了很多底层的C语言API。在我们平时编写的OC代码中，程序运行时，其实最终都是转成了Runtime的C语言代码。Runtime是开源的，你可以去[这里](http://opensource.apple.com//source/objc4/)下载Runtime的源码。
 本文主要分为两个章节，第一部分主要是理论和原理，第二部分主要是使用实例。简书文章[地址](http://www.jianshu.com/p/3e050ec3b759)，文章的最后会附上本文的demo下载链接。
 ## 理论知识
 ### 一、Objective-C中的数据结构
@@ -44,7 +44,7 @@ struct objc_class {
 * 5.cache：
 方法缓存列表，objc_msgSend（下文详解）每调用一次方法后，就会把该方法缓存到cache列表中，下次调用的时候，会优先从cache列表中寻找，如果cache没有，才从methodLists中查找方法。提高效率。
 
-![](http://upload-images.jianshu.io/upload_images/1321491-dda0360cd4769dbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://img.blog.csdn.net/20160818110806256)
 ##### 看图说话：
 上图中：superclass指针代表继承关系，isa指针代表实例所属的类。
 类也是一个对象，它是另外一个类的实例，这个就是“元类”，元类里面保存了类方法的列表，类里面保存了实例方法的列表。实例对象的isa指向类，类对象的isa指向元类，元类对象的isa指针指向一个“根元类”（root metaclass）。所有子类的元类都继承父类的元类，换而言之，类对象和元类对象有着同样的继承关系。
