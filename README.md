@@ -167,6 +167,7 @@ id returnValue objc_mgSend(someObject, @selector(message:), parm);
 ### 三、消息转发（message forwarding）
 上面说了消息的传递机制，下面就来说一下，如果对象在收到无法解读的消息之后会发生上面情况。
 当一个对象在收到无法解读的消息之后，它会将消息实施转发。转发的主要步骤如下：
+
 **消息转发步骤：**
 * 第一步：对象在收到无法解读的消息后，首先调用```resolveInstanceMethod：```方法决定是否动态添加方法。如果返回YES，则调用```class_addMethod```动态添加方法，消息得到处理，结束；如果返回NO，则进入下一步；
 * 第二步：当前接收者还有第二次机会处理未知的选择子，在这一步中，运行期系统会问：能不能把这条消息转给其他接收者来处理。会进入```forwardingTargetForSelector:```方法，用于指定备选对象响应这个selector，不能指定为self。如果返回某个对象则会调用对象的方法，结束。如果返回nil，则进入下一步；
