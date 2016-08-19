@@ -47,21 +47,21 @@ struct objc_class {
 方法缓存列表，objc_msgSend（下文详解）每调用一次方法后，就会把该方法缓存到cache列表中，下次调用的时候，会优先从cache列表中寻找，如果cache没有，才从methodLists中查找方法。提高效率。
 
 ![](http://upload-images.jianshu.io/upload_images/1321491-dda0360cd4769dbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-##### 看图说话：
+**看图说话：**
 上图中：superclass指针代表继承关系，isa指针代表实例所属的类。
 类也是一个对象，它是另外一个类的实例，这个就是“元类”，元类里面保存了类方法的列表，类里面保存了实例方法的列表。实例对象的isa指向类，类对象的isa指向元类，元类对象的isa指针指向一个“根元类”（root metaclass）。所有子类的元类都继承父类的元类，换而言之，类对象和元类对象有着同样的继承关系。
 >  PS: 
 1.Class是一个指向objc_class结构体的指针，而id是一个指向objc_object结构体的指针，其中的isa是一个指向objc_class结构体的指针。其中的id就是我们所说的对象，Class就是我们所说的类。
 2.isa指针不总是指向实例对象所属的类，不能依靠它来确定类型，而是应该用```isKindOfClass:```方法来确定实例对象的类。因为KVO的实现机制就是将被观察对象的isa指针指向一个中间类而不是真实的类。
 
-### 3.SEL
+#### 3.SEL
 SEL是选择子的类型，选择子指的就是方法的名字。在Runtime的头文件中的定义如下：
 ```objc
 typedef struct objc_selector *SEL;
 ```
 它就是个映射到方法的C字符串，SEL类型代表着方法的签名，在类对象的方法列表中存储着该签名与方法代码的对应关系，每个方法都有一个与之对应的SEL类型的对象，根据一个SEL对象就可以找到方法的地址，进而调用方法。
 
-### 4.Method
+#### 4.Method
 Method代表类中的某个方法的类型，在Runtime的头文件中的定义如下：
 ```objc
 typedef struct objc_method *Method;
@@ -80,7 +80,7 @@ struct objc_method {
 
 ``` class_copyMethodList(Class cls, unsigned int *outCount) ```可以使用这个方法获取某个类的成员方法列表。
 
-### 5.Ivar
+#### 5.Ivar
 Ivar代表类中实例变量的类型，在Runtime的头文件中的定义如下：
 ```objc
 typedef struct objc_ivar *Ivar;
@@ -97,19 +97,19 @@ struct objc_ivar {
 }
 ```
 ``` class_copyIvarList(Class cls, unsigned int *outCount) ``` 可以使用这个方法获取某个类的成员变量列表。
-### 6.objc_property_t
+#### 6.objc_property_t
 objc_property_t是属性，在Runtime的头文件中的的定义如下：
 ```objc
 typedef struct objc_property *objc_property_t;
 ```
 ``` class_copyPropertyList(Class cls, unsigned int *outCount) ``` 可以使用这个方法获取某个类的属性列表。
-### 7.IMP
+#### 7.IMP
 IMP在Runtime的头文件中的的定义如下：
 ```objc
 typedef id (*IMP)(id, SEL, ...);
 ```
 IMP是一个函数指针，它是由编译器生成的。当你发起一个消息后，这个函数指针决定了最终执行哪段代码。
-### 8.Cache
+#### 8.Cache
 Cache在Runtime的头文件中的的定义如下：
 ```objc
 typedef struct objc_cache *Cache
@@ -167,7 +167,7 @@ id returnValue objc_mgSend(someObject, @selector(message:), parm);
 ### 三、消息转发（message forwarding）
 上面说了消息的传递机制，下面就来说一下，如果对象在收到无法解读的消息之后会发生上面情况。
 当一个对象在收到无法解读的消息之后，它会将消息实施转发。转发的主要步骤如下：
-#### 消息转发步骤
+**消息转发步骤：**
 * 第一步：对象在收到无法解读的消息后，首先调用```resolveInstanceMethod：```方法决定是否动态添加方法。如果返回YES，则调用```class_addMethod```动态添加方法，消息得到处理，结束；如果返回NO，则进入下一步；
 * 第二步：当前接收者还有第二次机会处理未知的选择子，在这一步中，运行期系统会问：能不能把这条消息转给其他接收者来处理。会进入```forwardingTargetForSelector:```方法，用于指定备选对象响应这个selector，不能指定为self。如果返回某个对象则会调用对象的方法，结束。如果返回nil，则进入下一步；
 * 第三步：这步我们要通过```methodSignatureForSelector:```方法签名，如果返回nil，则消息无法处理。如果返回methodSignature，则进入下一步；
